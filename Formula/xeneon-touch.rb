@@ -7,6 +7,7 @@ class XeneonTouch < Formula
   sha256 "ea75b79c40b04abd8e92e2b9241eee8f7d616a7f2d984fb32a71afe6c0119d00"
   license "MIT"
 
+  depends_on "pkg-config" => :build
   depends_on "hidapi"
   depends_on "python@3.13"
   depends_on :macos
@@ -46,6 +47,10 @@ class XeneonTouch < Formula
   end
 
   def install
+    # The cython 'hidapi' wheel finds the native library via pkg-config, so
+    # make Homebrew's hidapi .pc discoverable during the resource build.
+    ENV.prepend_path "PKG_CONFIG_PATH", Formula["hidapi"].opt_lib/"pkgconfig"
+
     # The Python package lives in the repo's userspace/ subdirectory.
     cd "userspace" do
       virtualenv_install_with_resources
