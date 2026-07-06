@@ -50,8 +50,13 @@ Mac with Homebrew:
      | shasum -a 256
    # paste it over the sha256 placeholder
 
-   # b) auto-generate all Python resource blocks (hidapi + the pyobjc tree)
-   brew update-python-resources Formula/xeneon-touch.rb
+   # b) generate all Python resource blocks (hidapi + the pyobjc tree)
+   #    NOTE: `brew update-python-resources` does NOT work here — the package's
+   #    pyproject.toml lives in the repo's userspace/ subdir, which pip can't
+   #    resolve from the tarball root. Use the bundled generator instead:
+   python3 generate_resources.py > resources.txt
+   #    then paste resources.txt into Formula/xeneon-touch.rb between
+   #    `depends_on` and `def install` (replacing the placeholder comment).
    ```
 
 3. **Test locally before publishing:**
