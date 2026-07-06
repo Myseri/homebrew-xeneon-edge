@@ -51,10 +51,13 @@ class XeneonTouch < Formula
     # make Homebrew's hidapi .pc discoverable during the resource build.
     ENV.prepend_path "PKG_CONFIG_PATH", Formula["hidapi"].opt_lib/"pkgconfig"
 
-    # The Python package lives in the repo's userspace/ subdirectory.
-    cd "userspace" do
-      virtualenv_install_with_resources
-    end
+    # Build the venv and install the resources, then install the package itself
+    # from the userspace/ subdirectory (virtualenv_install_with_resources always
+    # installs the main package from the tarball root, where there's no
+    # pyproject.toml, so we do the final step explicitly).
+    venv = virtualenv_create(libexec, "python3.13")
+    venv.pip_install resources
+    venv.pip_install_and_link buildpath/"userspace"
   end
 
   service do
