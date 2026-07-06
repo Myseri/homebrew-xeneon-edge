@@ -4,10 +4,7 @@ class XeneonTouch < Formula
   desc "Single-touch daemon for the Corsair Xeneon Edge touchscreen on macOS"
   homepage "https://github.com/Myseri/xeneon-edge-multitouch-macos"
   url "https://github.com/Myseri/xeneon-edge-multitouch-macos/archive/refs/tags/v0.1.0.tar.gz"
-  # TODO: real checksum after tagging v0.1.0 in the main repo:
-  #   curl -sL <url> | shasum -a 256
-  # (or run `brew install` once and copy the "expected ... got ..." value it prints)
-  sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+  sha256 "ea75b79c40b04abd8e92e2b9241eee8f7d616a7f2d984fb32a71afe6c0119d00"
   license "MIT"
 
   depends_on "hidapi"
